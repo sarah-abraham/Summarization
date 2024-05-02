@@ -5,7 +5,6 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from report import gen_report
-from io import BytesIO
 import cloudinary
 import requests
 
