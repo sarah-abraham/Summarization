@@ -1,0 +1,7 @@
+cloudinary
+reportlab
+requests
+io
+datetime
+flask
+flask_cors
