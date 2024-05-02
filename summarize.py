@@ -1,4 +1,5 @@
 import os
+import cloudinary.search
 import cloudinary.uploader
 import requests
 from reportlab.lib.pagesizes import A4
@@ -15,9 +16,24 @@ def summarize():
     def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload)
         return response.json()
+    
+    cloudinary.config(
+            cloud_name="drf5xu4vy",
+            api_key="148639383182787",
+            api_secret="x28LCvHqziYGwzu6ezoGezgUlUo"
+        )
+    results = cloudinary.search.Search()\
+        .expression("public_id:combinedTranscript/combined_transcripts")\
+        .sort_by("public_id","desc")\
+        .execute()
+
+    # Print the results
+    for result in results['resources']:
+        url = result['url']
+        print(result['url'])
         
     # Cloudinary URL for the transcript
-    cloudinary_url = "https://res.cloudinary.com/drf5xu4vy/raw/upload/combinedTranscript/combined_transcripts"
+    cloudinary_url = url
 
     # Fetch transcript content from Cloudinary
     response = requests.get(cloudinary_url)
@@ -37,11 +53,7 @@ def summarize():
 
     pdf = "./meeting_minutes.pdf"
 
-    cloudinary.config(
-            cloud_name="drf5xu4vy",
-            api_key="148639383182787",
-            api_secret="x28LCvHqziYGwzu6ezoGezgUlUo"
-        )
+  
     cloudinary_response = cloudinary.uploader.upload(
             pdf,
             resource_type="auto",
