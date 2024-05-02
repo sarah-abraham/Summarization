@@ -5,3 +5,5 @@ io
 datetime
 flask
 flask_cors
+gunicorn
+gevent>=1.4
